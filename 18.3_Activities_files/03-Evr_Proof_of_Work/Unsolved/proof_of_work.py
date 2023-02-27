@@ -36,6 +36,18 @@ class Block:
 @dataclass
 class PyChain:
     chain: List[Block]
+    difficulty: int = 4
 
-    def add_block(self, block):
+    def proof_of_work(self, block):
+        calculated_hash = block.hash_block()
+        number_of_zero = "0" * self.difficulty
+
+        while not calculated_hash.startswith(number_of_zero):
+            block.nonce += 1
+            calculated_hash = block.hash_block()
+        
+        return block
+
+    def add_block(self, candidate_block):
+        block = self.proof_of_work(candidate_block)
         self.chain += [block]

@@ -9,6 +9,7 @@ class Block:
     creator_id: int
     prev_hash: str = "0"
     timestamp: str = datetime.datetime.utcnow().strftime("%H:%M:%S")
+    nonce: int = 0
 
     def hash_block(self):
         sha = hashlib.sha256()
@@ -25,4 +26,15 @@ class Block:
         timestamp = str(self.timestamp).encode()
         sha.update(timestamp)
 
+        nonce = str(self.nonce).encode()
+        sha.update(nonce)
+
         return sha.hexdigest()
+
+block = Block('test',1)
+print(f"the original nonce is: {block.nonce}")
+print(f"the original hash is:{block.hash_block()}")
+
+block.nonce += 1
+print(f"the original nonce is: {block.nonce}")
+print(f"the original hash is:{block.hash_block()}")

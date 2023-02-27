@@ -51,6 +51,7 @@ class Block:
 @dataclass
 class PyChain:
     chain: List[Block]
+    difficulty: int = 4
 
     # @TODO:
     # Add a `difficulty` data attribute with a data type of `int` and a default
@@ -62,6 +63,7 @@ class PyChain:
 # the `difficulty` value.
     def proof_of_work(self, block):
         calculated_hash = block.hash_block()
+        num_of_zeros = "0" * self.difficulty
 
         # @TODO:
         # Add a `num_of_zeros` variable that multiplies the string value ("0") 
@@ -110,13 +112,12 @@ input_data = st.text_input("Block Data")
 # @TODO:
 # Add a Streamlit slider named "Block Difficulty" that allows the user to update a 
 # difficulty value. Set this equal to the variable `difficulty`
-# YOUR CODE HERE
+difficulty = st.sidebar.slider(label="Block Difficulty", min_value=1, max_value=5, value=4)
 
 # @TODO
 # Update the `difficulty` data attribute of the `PyChain` data class (`pychain.difficulty`) 
 # with this new `difficulty` value
-# YOUR CODE HERE
-
+pychain.difficulty = difficulty
 
 if st.button("Add Block"):
     prev_block = pychain.chain[-1]

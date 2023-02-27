@@ -80,28 +80,29 @@ class PyChain:
         # Add the code to generate the hash of the first block in the chain.
         # Set the hash equal to a variable called block_hash
         # Hint - The first block in the chain is at index position 0.
-        # YOUR CODE HERE
+        block_hash = self.chain[0].hash_block()
 
         # @TODO:
         # Create a for-loop to access the remainder of the blocks in the
         # chain, starting at index position 1
-        # YOUR CODE HERE
-
-
+        for block in self.chain[1:]:
+            
             # @TODO:
             # Code an if statement that compares the block_hash of the
             # previous block to the prev_hash value of the current block
             # If the two hashes are NOT equal, print a statement that says
             # "Blockchain is invalid", and then return the value False
-            # YOUR CODE HERE
+            if block_hash !=block.prev_hash:
+                print('Blockchain is invalid')
+                return False
 
 
             # @TODO:
             # Set the block_hash value equal to the hashed value of the current
             # block
-            # YOUR CODE HERE
+            block_hash = block.hash_block()
 
-
+        
         print("Blockchain is Valid")
         return True
 
@@ -152,8 +153,8 @@ st.write(pychain_df)
 
 # @TODO:
 # Add a button with the text “Validate Blockchain” to your Streamlit interface.
-# YOUR CODE HERE
-
+if st.button('Validate Blockchain'):
+    st.write(pychain.is_valid())
 # Step 3:
 # Code the Validate Blockchain button so that when it’s clicked, it calls
 # the `is_valid` method of the `PyChain` data class and then writes the
